@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(8, 50px);
+      grid-template-rows: repeat(8, 50px);
+    }
+
+    .cell {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .white {
+      background-color: #f0d9b5;
+    }
+
+    .black {
+      background-color: #b58863;
+    }
+
+    .piece {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #333;
+    }
+
+    .red {
+      background-color: #e74c3c;
+    }
+
+    .black-piece {
+      background-color: #333;
+      border: 2px solid #b58863;
+    }
+  </style>
+</head>
+<body>
+
+<div id="board"></div>
+
+<script>
+  const board = document.getElementById('board');
+  let squares = [];
+
+  // Function to initialize the board
+  function initializeBoard() {
+    for (let row = 0; row < 8; row++) {
+      squares[row] = [];
+      for (let col = 0; col < 8; col++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell', (row + col) % 2 === 0 ? 'white' : 'black');
+        cell.dataset.row = row;
+        cell.dataset.col = col;
+        cell.addEventListener('click', handleCellClick);
+        squares[row][col] = cell;
+        board.appendChild(cell);
+      }
+    }
+  }
+
+  // Function to add pieces to the board
+  function addPieces() {
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 8; col++) {
+        if ((row + col) % 2 !== 0) {
+          const piece = document.createElement('div');
+          piece.classList.add('piece', 'black-piece');
+          squares[row][col].appendChild(piece);
+        }
+      }
+    }
+
+    for (let row = 5; row < 8; row++) {
+      for (let col = 0; col < 8; col++) {
+        if ((row + col) % 2 !== 0) {
+          const piece = document.createElement('div');
+          piece.classList.add('piece');
+          squares[row][col].appendChild(piece);
+        }
+      }
+    }
+  }
+
+  // Event handler for cell click
+  function handleCellClick(event) {
+    const clickedCell = event.target;
+    const row = parseInt(clickedCell.dataset.row);
+    const col = parseInt(clickedCell.dataset.col);
+
+    // Your logic for handling the click goes here
+
+    // Example: Toggle the background color on click
+    clickedCell.classList.toggle('red');
+  }
+
+  // Initialize the board and add pieces
+  initializeBoard();
+  addPieces();
+</script>
+
+</body>
+</html>
